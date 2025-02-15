@@ -1,25 +1,19 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.13'
+        }
+    }
 
     stages {
-        stage('Setup Python') {
+        stage('Something') {
             steps {
                 sh '''
-                    sudo add-apt-repository ppa:deadsnakes/ppa
-                    sudo apt-get update
-                    sudo apt-get install -y python3.13 python3.13-venv
-                    python3.13 -m venv .venv
-                '''
-            }
-        }
-
-        stage('Setup Dependencies') {
-            steps {
-                sh '''
+                    python -m venv .venv
                     . .venv/bin/activate
-                    python -m pip install --upgrade pip
-                    python -m pip install poetry
+                    pip install poetry
                     poetry install
+                    poetry run pytest
                 '''
             }
         }
