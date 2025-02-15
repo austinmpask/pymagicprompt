@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="magicprompt",
-    version="0.2.3",
+    version="0.2.4",
     packages=find_packages(),
     install_requires=[],
     url="https://github.com/austinmpask/pymagicprompt",

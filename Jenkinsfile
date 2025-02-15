@@ -9,7 +9,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    pip install pytest setuptools twine
+                    pip install pytest setuptools twine wheel
                     pytest
                 '''
             }
@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'python setup.py sdist'
+                sh 'python setup.py sdist bdist_wheel'
             }
         }
 
