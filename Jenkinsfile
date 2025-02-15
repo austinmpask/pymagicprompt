@@ -5,8 +5,10 @@ pipeline {
         stage('Setup') {
             steps {
                 sh '''
-                    python3 -m pip install --upgrade pip
-                    python3 -m pip install poetry
+                    python3 -m venv .venv
+                    . .venv/bin/activate
+                    python -m pip install --upgrade pip
+                    python -m pip install poetry
                     poetry install
                 '''
             }
