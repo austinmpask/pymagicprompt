@@ -2,39 +2,34 @@ pipeline {
     agent {
         docker {
             image 'python:3.13'
+            args '--user root'
         }
     }
-
     stages {
-        stage('Something') {
+        stage('Test') {
             steps {
                 sh '''
-                    python -m venv .venv
-                    . .venv/bin/activate
-                    pip install poetry
-                    poetry install
-                    poetry run pytest
+                    pip install pytest setuptools twine
+                    pytest
                 '''
             }
         }
 
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'poetry run pytest'
+                sh 'python setup.py sdist'
             }
         }
 
-    // stage('Build and Publish') {
-    //     environment {
-    //         PYPI_TOKEN = credentials('PYPI_TOKEN')
-    //     }
-    //     steps {
-    //         sh '''
-    //             poetry config pypi-token.pypi $PYPI_TOKEN
-    //             poetry build
-    //             poetry publish --no-interaction
-    //         '''
-    //     }
-    // }
+        stage('Publish') {
+            environment {
+                PYPI_TOKEN = credentials('pypi-magicprompt')
+            }
+            steps {
+                sh '''
+                    twine upload dist/* --username __token__ --password $PYPI_TOKEN
+                '''
+            }
+        }
     }
 }
