@@ -5,11 +5,12 @@ pipeline {
         stage('Setup') {
             steps {
                 sh '''
+                    curl https://pyenv.run | bash
+                    export PATH="$HOME/.pyenv/bin:$PATH"
+                    eval "$(pyenv init -)"
+                    pyenv install 3.13
+                    pyenv global 3.13
                     python3 -m venv .venv
-                    . .venv/bin/activate
-                    python -m pip install --upgrade pip
-                    python -m pip install poetry
-                    poetry install
                 '''
             }
         }
