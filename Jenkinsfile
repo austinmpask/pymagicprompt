@@ -1,22 +1,34 @@
 pipeline {
     agent any
 
-    tools {
-        python 'python3.13'
-    }
-
     stages {
-        stage('Build') {
-            // steps {
-            //     sh 'pip install '
-            //     sh 'python setup.py sdist'
-            // }
+        stage('Setup') {
+            steps {
+                sh '''
+                    python3 -m pip install --upgrade pip
+                    python3 -m pip install poetry
+                    poetry install
+                '''
+            }
         }
 
         stage('Test') {
+            steps {
+                sh 'poetry run pytest'
+            }
         }
 
-        stage('Deploy') {
-        }
+        // stage('Build and Publish') {
+        //     environment {
+        //         PYPI_TOKEN = credentials('PYPI_TOKEN')
+        //     }
+        //     steps {
+        //         sh '''
+        //             poetry config pypi-token.pypi $PYPI_TOKEN
+        //             poetry build
+        //             poetry publish --no-interaction
+        //         '''
+        //     }
+        // }
     }
 }
