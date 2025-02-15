@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from main import prompt
+from magicprompt import prompt
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 from getpass import getpass
 
-from config import COLORS, PromptOptions
-from utils import clrLn, inferType, validate
+from magicprompt.config import COLORS, PromptOptions
+from magicprompt.utils import clrLn, inferType, validate
 
 
 def prompt(
@@ -175,6 +175,3 @@ def prompt(
                 a = fn(a)
 
     return a
-
-
-something = prompt("hello there")

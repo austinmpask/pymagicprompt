@@ -1,6 +1,6 @@
 import pytest
 
-from utils import inferType, isfloat, validate
+from magicprompt import inferType, isfloat, validate
 
 
 @pytest.mark.parametrize(
